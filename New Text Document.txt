@@ -1,0 +1,11 @@
+user request create
+2nd user view app status
+see status
+request id generated
+
+admin side:-
+dashboard(list)
+see status(1 for new, 1 for processing, 1 for completed)
+
+https://developers.google.com/maps/documentation/javascript/importing_data
+https://developers.google.com/maps/documentation/javascript/info-windows-to-db

@@ -1,0 +1,127 @@
+extends layout
+block content
+  main.container.mt-3
+    div.row
+      div.col-md-4
+        div#list-tab.list-group(role="tablist")
+          if(false)
+            a#list-view-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-view" role="tab" aria-controls="view") View Requests
+            a#list-notification-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-notification" role="tab" aria-controls="notification") View Notification
+            a#list-quotation-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-quotation" role="tab" aria-controls="quotation") Send Quotation
+          if(data.userType == 'user')
+            a#list-generate-list.list-group-item.list-group-item-action.active(data-toggle="list" href="#list-generate" role="tab" aria-controls="generate") Generate Request            
+            a#list-view-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-view" role="tab" aria-controls="view") View Request Status
+          if(false)
+            a#list-signup-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-signup" role="tab" aria-controls="signup") Signup
+            a#list-sendnotification-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-sendnotification" role="tab" aria-controls="sendnotification") Send Notification
+          a#list-changeprofile-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-changeprofile" role="tab" aria-controls="changeprofile") Update Profile
+          a#list-changepass-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-changepass" role="tab" aria-controls="changepass") Change Password
+      div.col-md-8
+        div#nav-tabContent.tab-content
+          div#list-view.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-view-list")
+            h1 List Of All The Request
+            hr
+            div.container
+              h5 Name: Narendra Verma
+              h5 City: Indore
+              h5 Mobile: +919999999999
+              h5 Address: Sadak par h bichara
+              hr
+          div#list-notification.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-notification-list")
+            h1 View Notification
+            hr
+            .container
+          div#list-generate.tab-pane.fade.show.active(role="tabpanel" aria-labelledby="list-generate-list")
+            h1 Generate Request
+            hr
+            div(id="map" style="overflow: auto;width: 100%; height:400px;")
+            form(action="/request/generate", method="POST", class="my-3")
+              input(type="hidden", name="lat", value="", id="lat")
+              input(type="hidden", name="lng", value="", id="lng")                            
+              script(src="/javascripts/map.js")
+              script(async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsplp87HSqerPj9hPWbT1Zan7QnRXJJSo&callback=initMap")
+              button.btn.btn-primary Generate Request
+            
+          div#list-view.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-view-list")
+            h1 View Request Status
+            hr
+            div.container
+          div#list-quotation.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-quotation-list")
+            h1 Send Quotation
+            hr
+            div.container
+              form(action="")
+                div.form-group
+                  label(for="request")
+                  select#request.form-control(name="request")
+                    option(value="Request1") Request 1
+                    option(value="Request1") Request 1
+                    option(value="Request3") Request 1
+                div.form-group
+                  label(for="materials")
+                  textarea#materials.form-control(name="materials" cols="30" rows="10")
+                button.btn.btn-primary Submit
+          div#list-signup.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-signup-list")
+            h1 Signup
+            hr
+            form
+              div.form-row
+                div.form-group.col-md-6
+                  label(for="username") Username
+                  input#username.form-control(type="username" name="username" placeholder="Email")
+                div.form-group.col-md-6
+                  label(for="password") Password
+                  input#password.form-control(type="password" name="password" placeholder="Password")
+              div.form-group
+                label(for="email") Email
+                input#email.form-control(type="email" name="email" placeholder="abc@example.com")
+              div.form-group
+                label(for="mobile") Mobile
+                input#mobile.form-control(type="text" name="mobile" placeholder="Mobile")
+              div.form-group
+                label(for="city") City
+                input#city.form-control(type="text" name="city" placeholder="City")
+              div.form-group
+                label(for="signupas") Signup As
+                select#signupas.form-control(name="signupas" placeholder="Signup As")
+                  option(value="Admin") Admin
+                  option(value="User") User
+                  option(value="Engineer") Engineer
+                  option(value="Contractor") Contractor
+              button.btn.btn-primary(type="submit") Add Engineer
+          div#list-sendnotification.tab-pane.fade(role="tabpanel" aria-labelledby="list-sendnotification-list")
+            h1 Send Notification
+            hr
+            form
+              div.form-group
+                textarea#notification.form-control(name="notification" cols="30" rows="10")
+              button.btn.btn-primary(type="submit") Send Notification
+          div#list-changeprofile.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-changeprofile-list")
+            h1 Update Profile
+            hr
+            form
+              div.form-row
+                div.form-group.col-md-6
+                  label(for="username") Username
+                  input#username.form-control(type="username" name="username" placeholder="Email")
+                div.form-group.col-md-6
+                  label(for="password") Password
+                  input#password.form-control(type="password" name="password" placeholder="Password")
+              div.form-group
+                label(for="email") Email
+                input#email.form-control(type="email" name="email" placeholder="abc@example.com")
+              div.form-group
+                label(for="mobile") Mobile
+                input#mobile.form-control(type="text" name="mobile" placeholder="Mobile")
+              div.form-group
+                label(for="city") City
+                input#city.form-control(type="text" name="city" placeholder="City")
+              button.btn.btn-primary(type="submit") Update Profile
+          div#list-changepass.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-changepass-list")
+            h1 Change Password
+            hr
+            form
+              div.form-group
+                label(for="newpass") New Password
+                input#newpass.form-control(type="password" name="newpass" placeholder="New Password")
+              button.btn.btn-primary(type="submit") Change Password

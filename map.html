@@ -1,0 +1,75 @@
+<!DOCTYPE html >
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>From Info Windows to a Database: Saving User-Added Form Data</title>
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+     * element that contains the map. */
+
+        #map {
+            height: 100%;
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map" height="460px" width="100%"></div>
+
+    <script>
+        var map;
+        var marker;
+        var latlng;
+
+        function initMap() {
+            var indore = { lat: 22.7196, lng: 75.8577 };
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: indore,
+                zoom: 13
+            });
+
+            google.maps.event.addListener(map, 'click', function (event) {
+                addMarker(event.latLng);
+            });
+        }
+
+        function addMarker(location) {
+            setMapOnAll(null);
+            marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+        }
+
+        // Sets the map on all markers in the array.
+      function setMapOnAll(map) {
+          marker.setMap(map);
+      }
+
+      // Shows any markers currently in the array.
+      function showMarkers() {
+        setMapOnAll(map);
+      }
+
+      // Deletes all markers in the array by removing references to them.
+      function deleteMarkers() {
+        setMapOnAll(null);
+        marker = null;
+      }
+
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsplp87HSqerPj9hPWbT1Zan7QnRXJJSo&callback=initMap">
+    </script>
+</body>
+
+</html>

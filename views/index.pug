@@ -1,0 +1,23 @@
+extends layout
+block content
+  main
+    .container
+      .row
+        .col-md-7
+          img(src="images/Road Maintenance.jpg", class="img-thumbnail mt-2")
+        .col-md-5.my-auto
+          form(action="/login" method="POST" class="my-2")
+            .form-group
+              label(for="username") Email address
+              input#username.form-control(type="email" name="email" aria-describedby="emailHelp" placeholder="Enter email")
+            .form-group
+              label(for="password") Password
+              input#password.form-control(type="password" name="password" placeholder="Password")
+            .form-group
+              label(for="userType")
+              select#userType.form-control(name="userType")
+                option(value="user") User
+                option(value="contractor") Contractor
+                option(value="admin") Admin
+                option(value="engineer") Engineer
+            button.btn.btn-primary(type="submit" class="d-inline-block") Submit
