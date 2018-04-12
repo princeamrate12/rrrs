@@ -7,9 +7,9 @@ var mongoose = require('mongoose');
 var session = require("express-session");
 var cookieParser = require('cookie-parser');
 
-var indexRouter = require('./routes/index');
-var userRouter = require('./routes/user');
-var requestRouter = require('./routes/request');
+var index = require('./routes/index');
+var user = require('./routes/user');
+var request = require('./routes/request');
 
 var app = express();
 
@@ -33,9 +33,9 @@ app.use(cookieParser());
 app.use(session({ secret: "kisikobatanamat", resave: true, saveUninitialized: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/user', userRouter);
-app.use('/request', requestRouter);
-app.use('/', indexRouter);
+app.use('/user', user);
+app.use('/request', request);
+app.use('/', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,20 +1,19 @@
 var express = require('express');
 var router = express.Router();
 
-var User = require('../models/user');
-var Request = require('../models/request');
+var request_controller = require('../controllers/requestController');
+var user_controller = require('../controllers/userController');
 
-var auth = require('./authorization');
+//Display dashboard GET
+router.get('/dashboard', user_controller.user_dashboard_get);
 
-//HOME ROUTE
-router.get('/dashboard', [
-    auth.checkSignIn,
-    function(req, res, next){
-        var data = {
-            userType: req.session.user.user_type
-        }
-        res.render('dashboard', {data: data});
-    }
-]);
+//Handle profile update POST
+router.post('/update', user_controller.user_update_post);
+
+//Handle change password POST
+// router.post('/changepass', user_controller.user_changepass_post);
+
+//Handle logout GET
+router.get('/logout', user_controller.user_logout_get);
 
 module.exports = router;
