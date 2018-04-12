@@ -9,12 +9,12 @@ block content
           form(action="/login" method="POST" class="my-2")
             .form-group
               label(for="username") Email address
-              input#username.form-control(type="email" name="email" aria-describedby="emailHelp" placeholder="Enter email")
+              input#username.form-control(type="email" name="email" placeholder="Enter email")
             .form-group
               label(for="password") Password
               input#password.form-control(type="password" name="password" placeholder="Password")
             .form-group
-              label(for="userType")
+              label(for="userType") LogIn As
               select#userType.form-control(name="userType")
                 option(value="user") User
                 option(value="contractor") Contractor

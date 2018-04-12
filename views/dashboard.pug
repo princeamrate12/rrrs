@@ -18,7 +18,7 @@ block content
             a#list-signup-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-signup" role="tab" aria-controls="signup") Signup
             a#list-sendnotification-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-sendnotification" role="tab" aria-controls="sendnotification") Send Notification
           a#list-changeprofile-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-changeprofile" role="tab" aria-controls="changeprofile") Update Profile
-          a#list-changepass-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-changepass" role="tab" aria-controls="changepass") Change Password
+          a#list-lgout-list.list-group-item.list-group-item-action(href="/user/logout") Log Out
       div.col-md-8
         div#nav-tabContent.tab-content
           div#list-view.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-view-list")
@@ -118,11 +118,3 @@ block content
                 label(for="mobile") Mobile
                 input#mobile.form-control(type="text" name="mobile" placeholder="Mobile")
               button.btn.btn-primary(type="submit") Update Profile
-          div#list-changepass.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-changepass-list")
-            h1 Change Password
-            hr
-            form
-              div.form-group
-                label(for="newpass") New Password
-                input#newpass.form-control(type="password" name="newpass" placeholder="New Password")
-              button.btn.btn-primary(type="submit") Change Password
