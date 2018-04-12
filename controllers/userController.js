@@ -68,7 +68,7 @@ exports.user_dashboard_get = function (req, res, next) {
 
 //Handle update profile POST
 exports.user_update_post = function (req, res, next) {
-    user = req.session._id;
+    user = req.session.user._id;
     console.log("user");
     var userdetail = {
         first_name: req.body.fname,
@@ -89,7 +89,7 @@ exports.user_update_post = function (req, res, next) {
     })
 };
 
-//HAndle user logout POST
+//Handle user logout POST
 exports.user_logout_get = function (req, res, next) {
     req.session.destroy(function () {
         res.redirect('/');
