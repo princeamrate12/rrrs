@@ -32,7 +32,7 @@ exports.user_create_post = function (req, res, next) {
 
             user.save(function (err) {
                 if (err) { return next(err); }
-                req.session.user = user;
+                req.session.user = found_user;
                 res.redirect('/user/dashboard');
             });
         }
@@ -69,12 +69,22 @@ exports.user_dashboard_get = function (req, res, next) {
 //Handle update profile POST
 exports.user_update_post = function (req, res, next) {
     user = req.session._id;
-    password: req.body.password;
-    User.findByIdAndUpdate(user, newPassword, function (err, Password) {
+    console.log("user");
+    var userdetail = {
+        first_name: req.body.fname,
+        last_name: req.body.lname,
+        password: req.body.password,
+        email: req.body.email,
+        mobile: req.body.mobile,
+        _id: req.session.user._id
+    }
+    
+    User.findByIdAndUpdate(user, userdetail, function (err, updated) {
         if (err) {
             return next(err);
         } else {
-            res.redirect('/dashboard');
+            console.log("user updated");
+            res.redirect('/user/dashboard');
         }
     })
 };
