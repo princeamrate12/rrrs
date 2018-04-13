@@ -1,5 +1,5 @@
 var User = require('../models/user');
-var request = require('../models/request');
+var Request = require('../models/request');
 
 var auth = require('./authorizationPermissions');
 
@@ -17,11 +17,12 @@ exports.user_generate_request_post = function (req, res, next) {
         status: "submitted"
     }
     var request = new Request(requestDetail);
-    request.save(function (err, saved) {
-        if (err) {
+    request.save(function(err, saved){
+        if(err){
             return next(err);
         } else {
-            res.redirect("/dashboard");
+            // res.send("saved");
+            res.redirect('/user/dashboard');
         }
     })
 }

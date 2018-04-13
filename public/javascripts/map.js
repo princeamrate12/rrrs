@@ -1,4 +1,6 @@
 var map, marker, latlng, infoWindow;
+var latitude = document.getElementById("lat");
+var longitude = document.getElementById("lng");
 
 function initMap() {
     var indore = { lat: 22.7196, lng: 75.8577 };
@@ -54,6 +56,8 @@ function addMarker(location) {
     });
     latlng = marker.getPosition();
     latlng = { lat: latlng.lat(), lng: latlng.lng() };
+    latitude.value = latlng.lat;
+    longitude.value = latlng.lng;
     console.log(latlng);
 }
 

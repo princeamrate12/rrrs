@@ -40,14 +40,14 @@ exports.user_create_post = function (req, res, next) {
 }
 
 //Display login form GET
-exports.user_login_get = function(req, res, next){
+exports.user_login_get = function (req, res, next) {
     res.render('index');
 }
 
 //Handle Login form POST
-exports.user_login_post = function(req, res, next){
+exports.user_login_post = function (req, res, next) {
     User.findOne({ email: req.body.email, password: req.body.password }, function (err, user) {
-        if (err) {return next(err);}
+        if (err) { return next(err); }
         if (!user) {
             var err = new Error("User not found");
             err.status = 403;
@@ -68,7 +68,7 @@ exports.user_dashboard_get = function (req, res, next) {
 
 //Handle update profile POST
 exports.user_update_post = function (req, res, next) {
-    user = req.session.user._id;
+    user = req.session._id;
     console.log("user");
     var userdetail = {
         first_name: req.body.fname,
@@ -78,7 +78,7 @@ exports.user_update_post = function (req, res, next) {
         mobile: req.body.mobile,
         _id: req.session.user._id
     }
-    
+
     User.findByIdAndUpdate(user, userdetail, function (err, updated) {
         if (err) {
             return next(err);
@@ -89,7 +89,7 @@ exports.user_update_post = function (req, res, next) {
     })
 };
 
-//Handle user logout POST
+//HAndle user logout POST
 exports.user_logout_get = function (req, res, next) {
     req.session.destroy(function () {
         res.redirect('/');
