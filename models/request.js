@@ -1,5 +1,4 @@
 var mongoose = require("mongoose");
-
 var Schema = mongoose.Schema;
 
 var RequestSchema = new Schema({
@@ -8,10 +7,7 @@ var RequestSchema = new Schema({
     status: {type: String, required: true, enum: ['submitted', 'engineerAlloted', 'contractorAlloted', 'processing', 'completed'], default: 'submitted'},
     engineer: {type: Schema.ObjectId, ref: 'User'},
     contractor: {type: Schema.ObjectId, ref: 'User'},
-    notifications:[{type: String}],
     quotation: [{type: String}]
 });
-
-
 
 module.exports = mongoose.model("Request", RequestSchema);

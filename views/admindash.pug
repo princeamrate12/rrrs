@@ -23,6 +23,9 @@ block content
                 h5="Lng: " + request.address.lng
                 form(action="/request/update" method="post")
                   input(type="hidden", name="request_id", value=request._id)
+                  input(type="hidden", name="request_user_id", value=request.user._id)
+                  input(type="hidden", name="request_add_lat", value=request.address.lat)
+                  input(type="hidden", name="request_add_lng", value=request.address.lng)
                   h5 Status:
                   select(name="status" class="form-control")
                     each status in ['submitted', 'engineerAlloted', 'contractorAlloted', 'processing', 'completed']
@@ -32,21 +35,24 @@ block content
                         option(value=status)= status
                   h5 Engineer:
                   select(name="engineer" class="form-control")
-                    option(value="none") None
                     each engineer in data.engineers
+                      if(!request.engineer)
+                        option(selected value="") None
                       if(request.engineer == engineer)
                         option(selected, value=engineer._id)= engineer.first_name + " " + engineer.last_name
                       else
                         option(value=engineer._id)= engineer.first_name + " " + engineer.last_name
+                    else
+                      option(value="") None                        
                   h5 Contractor:
-                  select(name="status" class="form-control")
-                    option(value="none") None
+                  select(name="contractor" class="form-control")
                     each contractor in data.contractors
+                      if(!request.contractor)
+                        option(selected value="") None
                       if(request.contractor == contractor)
                         option(selected value=contractor._id)= contractor.first_name + " " + contractor.last_name
                       else
                         option(value=contractor._id)= contractor.first_name + " " + contractor.last_name
-                  
                   br
                   button(type="submit" class="btn btn-primary mt-2  ") Update Request
                 hr

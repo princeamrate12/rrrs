@@ -90,7 +90,6 @@ function userDashboard(req, res, next) {
 }
 
 function adminDashboard(req, res, next) {
-	console.log(req.session.user);
 	async.parallel({
 		requests: function (cb) {
 			Request.find().populate({
@@ -102,33 +101,83 @@ function adminDashboard(req, res, next) {
 				cb(null, requests);
 			});
 		},
-		user: function(cb){
+		user: function (cb) {
 			var user = req.session.user;
 			cb(null, user);
 		},
-		engineers: function(cb){
-			User.find({user_type: 'engineer'}, 'first_name last_name', function(err, engineers){
-				if(err) return next(err);
+		engineers: function (cb) {
+			User.find({ user_type: 'engineer' }, 'first_name last_name', function (err, engineers) {
+				if (err) return next(err);
 				cb(null, engineers);
 			});
 		},
-		contractors: function(cb){
-			User.find({user_type: 'contractor'}, 'first_name last_name', function(err, contractors){
-				if(err) return next(err);
+		contractors: function (cb) {
+			User.find({ user_type: 'contractor' }, 'first_name last_name', function (err, contractors) {
+				if (err) return next(err);
 				cb(null, contractors);
 			});
 		}
 	}, function (err, data) {
-		res.render('admindash', {data: data});
+		res.render('admindash', { data: data });
 	});
 }
 
 function engineerDashboard(req, res, next) {
-
+	async.parallel({
+		requests: function (cb) {
+			Request.find({ engineer: req.session.user._id }).populate({
+				path: 'user',
+				model: 'User',
+				select: 'first_name last_name mobile'
+			}).exec(function (err, requests) {
+				if (err) return next(err);
+				cb(null, requests);
+			});
+		},
+		user: function (cb) {
+			var user = req.session.user;
+			cb(null, user);
+		},
+	}, function (err, data) {
+		res.render('engineerdash', { data: data });
+	});
 }
 
 function contractorDashboard(req, res, next) {
-
+	async.parallel({
+		requests: function (cb) {
+			Request.find({contractor: req.session.user._id}).populate({
+				path: 'user',
+				model: 'User',
+				select: 'first_name last_name mobile'
+			}).exec(function (err, requests) {
+				if (err) return next(err);
+				cb(null, requests);
+			});
+		},
+		tender: function (cb) {
+			Request.find({ status: 'engineerAlloted' }).populate({
+				path: 'user',
+				model: 'User',
+				select: 'first_name last_name mobile'
+			}).exec(function(err, tender){
+				if (err) return next(err);
+				cb(null, tender)
+			});
+		},
+		user: function (cb) {
+			var user = req.session.user;
+			cb(null, user);
+		},
+		engineers: function (cb) {
+			User.find({ user_type: 'engineer' }, 'first_name last_name mobile', function (err, engineers) {
+				if (err) return next(err);
+				cb(null, engineers);
+			});
+		},
+	}, function (err, data) {
+		res.render('contractordash', { data: data });
+	});
 }
 
 //Display dashboard GET
@@ -138,8 +187,8 @@ exports.user_dashboard_get = function (req, res, next) {
 		adminDashboard(req, res, next);
 	} else if (userType == 'user') {
 		userDashboard(req, res, next);
-	} else if (userType == 'Contractor') {
-		contractorDashbaord(req, res, next);
+	} else if (userType == 'contractor') {
+		contractorDashboard(req, res, next);
 	} else {
 		engineerDashboard(req, res, next);
 	}

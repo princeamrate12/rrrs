@@ -31,14 +31,19 @@ exports.user_view_request_get = function(req, res, next){
 
 //Update Request POST
 exports.request_update_post = function(req, res, next){
-    requestid = req.body.request_id;
     var request = new Request({
+        _id: req.body.request_id,
+        user: req.body.request_user_id,
+        address: {
+            lat: req.body.request_add_lat,
+            lng: req.body.request_add_lng
+        },
         status: req.body.status,
 		engineer: req.body.engineer,
-		contractor: req.body.contractor,
-	});
-
-	User.findByIdAndUpdate(requestid, request, function (err, updated) {
+		contractor: req.body.contractor
+    });
+    // res.send(req.body);
+	Request.findByIdAndUpdate(req.body.request_id, request, function (err, updated) {
 		if (err) {
 			return next(err);
 		} else {

@@ -5,32 +5,82 @@ block content
     div.row
       div.col-md-4
         div#list-tab.list-group(role="tablist")
-          a#list-notification-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-notification" role="tab" aria-controls="notification") View Notification
+          a#list-request-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-request" role="tab" aria-controls="request") Alloted Sites
           a#list-changeprofile-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-changeprofile" role="tab" aria-controls="changeprofile") Update Profile
           a#list-lgout-list.list-group-item.list-group-item-action(href="/user/logout") Log Out
       div.col-md-8
         div#nav-tabContent.tab-content
-          div#list-notification.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-notification-list")
-            h1 View Notification
+          div#list-request.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-request-list")
+            h1 Alloted Sites
             hr
-            .container
+            - var count = 1;
+            each request in data.requests
+              h5= "Request Id: " + request._id
+              h5= "Requested By: " + request.user.first_name + " " + request.user.last_name
+              h5= "Mobile: " + request.user.mobile
+              div(id="map"+count style="overflow: auto;width: 100%; height:400px;" class="text-dark")
+              script.
+                var map;
+                function addInitialMarker(location) {
+                marker = new google.maps.Marker({
+                position: location,
+                map: map
+                });
+                }
+                function initMap() {
+                var requestloc = {lat: Number(#{request.address.lat}), lng: Number(#{request.address.lng})};
+                map = new google.maps.Map(document.getElementById('map#{+ count}'), {
+                zoom: 12,
+                center: requestloc,
+                mapTypeId: 'terrain'
+                });
+                infoWindow = new google.maps.InfoWindow;
+                if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+                };
+                infoWindow.setPosition(pos);
+                infoWindow.setContent('Your Location');
+                infoWindow.open(map);
+                map.setCenter(pos);
+                }, function () {
+                handleLocationError(true, infoWindow, map.getCenter());
+                });
+                } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+                }
+                addInitialMarker(requestloc);
+                }
+                function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+                infoWindow.setPosition(pos);
+                infoWindow.setContent(browserHasGeolocation ?
+                'Cannot find your current location' :
+                'Sorry your browser do not support Geolocation');
+                infoWindow.open(map);
+                }
+              - count++;
+              script(async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsplp87HSqerPj9hPWbT1Zan7QnRXJJSo&callback=initMap")
+              hr
           div#list-changeprofile.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-changeprofile-list")
             h1 Update Profile
             hr
             form(action="/user/update" method="POST")
               div.form-group
                 label(for="fname") First Name
-                input#fname.form-control(type="text" name="fname" placeholder="First Name" value=data.first_name)
+                input#fname.form-control(type="text" name="fname" placeholder="First Name" value=data.user.first_name)
               div.form-group
                 label(for="lname") Last Name
-                input#lname.form-control(type="text" name="lname" placeholder="Last Name" value=data.last_name)
+                input#lname.form-control(type="text" name="lname" placeholder="Last Name" value=data.user.last_name)
               div.form-group
                 label(for="password") Password
-                input#password.form-control(type="password" name="password" placeholder="Password" value=data.password)
+                input#password.form-control(type="password" name="password" placeholder="Password" value=data.user.password)
               div.form-group
                 label(for="email") Email
-                input#email.form-control(type="email" name="email" placeholder="abc@example.com" value=data.email)
+                input#email.form-control(type="email" name="email" placeholder="abc@example.com" value=data.user.email)
               div.form-group
                 label(for="mobile") Mobile
-                input#mobile.form-control(type="text" name="mobile" placeholder="Mobile" value=data.mobile)
+                input#mobile.form-control(type="text" name="mobile" placeholder="Mobile" value=data.user.mobile)
               button.btn.btn-primary(type="submit") Update Profile
