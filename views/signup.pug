@@ -1,32 +1,29 @@
 extends layout
 block content
   main.container
-    div.row
-      div.col-md-4
-      div.col-md-4.border.border-dark.rounded.p-3.mt-2
-        h1 Sign Up Here
-        form(action="/signup" method="POST")
-          div.form-group
-            label(for="fname") First Name
-            input#fname.form-control(type="text" name="fname" placeholder="First Name")
-          div.form-group
-            label(for="lname") Last Name
-            input#lname.form-control(type="text" name="lname" placeholder="Last Name")
-          div.form-group
-            label(for="password") Password
-            input#password.form-control(type="password" name="password" placeholder="Password")
-          div.form-group
-            label(for="email") Email
-            input#email.form-control(type="email" name="email" placeholder="abc@example.com")
-          div.form-group
-            label(for="mobile") Mobile
-            input#mobile.form-control(type="text" name="mobile" placeholder="Mobile")
-          div.form-group
-            label(for="userType") SignUp As
-            select#UserType.form-control(name="userType")
-              option(value="user") User
-              option(value="contractor") Contractor
-              option(value="engineer") Engiineer
-              option(value="admin") Admin
-          button.btn.btn-primary(type="submit") Register
-      div.col-md-4
+    div.signup.mx-auto
+      h1 Sign Up Here
+      form(action="/signup" method="POST")
+        div.form-group
+          label(for="fname") First Name
+          input#fname.form-control(type="text" name="fname" placeholder="First Name")
+        div.form-group
+          label(for="lname") Last Name
+          input#lname.form-control(type="text" name="lname" placeholder="Last Name")
+        div.form-group
+          label(for="password") Password
+          input#password.form-control(type="password" name="password" placeholder="Password")
+        div.form-group
+          label(for="email") Email
+          input#email.form-control(type="email" name="email" placeholder="abc@example.com")
+        div.form-group
+          label(for="mobile") Mobile
+          input#mobile.form-control(type="text" name="mobile" placeholder="Mobile")
+        div.form-group
+          label(for="userType") SignUp As
+          select#UserType.form-control(name="userType")
+            option(value="user") User
+            option(value="contractor") Contractor
+            option(value="engineer") Engiineer
+            option(value="admin") Admin
+        button.btn.btn-primary(type="submit") Register

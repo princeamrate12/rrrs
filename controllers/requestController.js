@@ -18,7 +18,6 @@ exports.user_generate_request_post = function (req, res, next) {
         if(err){
             return next(err);
         } else {
-            // res.send("saved");
             res.redirect('/user/dashboard');
         }
     })
@@ -46,6 +45,15 @@ exports.request_update_post = function(req, res, next){
 			res.redirect('/user/dashboard');
 		}
 	})
+}
+
+exports.delete_request_post = function(req, res, next){
+    requestid = req.body.request_id;
+    Request.findByIdAndRemove(requestid, function(err, removed){
+        if(err) next(err);
+        console.log("request deleted");
+        res.redirect('/user/dashboard');
+    })
 }
 
 //Handle quotation POST

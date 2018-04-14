@@ -14,7 +14,7 @@ block content
           div#list-generate.tab-pane.fade.show.active(role="tabpanel" aria-labelledby="list-generate-list")
             h1 Generate Request
             hr
-            h5.alert.alert-success(role="alert") Please point the place where you need Road Repairs
+            p.alert.alert-danger(role="alert") Please point the place where you need Road Repairs
             div(id="map" style="overflow: auto;width: 100%; height:400px;")
             form(action="/request/generate", method="POST", class="my-3")
               input(type="hidden", name="lat", value="", id="lat")
@@ -25,15 +25,16 @@ block content
           div#list-view.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-view-list")
             h1 View Request Status
             hr
+            p.alert.alert-danger(role="alert") Stages of Request are submitted, engineerAlloted, contractorAlloted, processing and completed!
             div.container
               each request in data.requests
                 h5= "Request Id: " + request._id
                 h5="Status: " + request.status
-                h5="Engineer: " + request.engineer.first_name
                 hr
           div#list-changeprofile.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-changeprofile-list")
             h1 Update Profile
             hr
+            p.alert.alert-danger(role="alert") If you change your email be sure to login with your updated email next time!
             form(action="/user/update" method="POST")
               div.form-group
                 label(for="fname") First Name

@@ -7,7 +7,6 @@ block content
         div#list-tab.list-group(role="tablist")
           a#list-view-list.list-group-item.list-group-item-action.active(data-toggle="list" href="#list-view" role="tab" aria-controls="view") View Requests
           a#list-signup-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-signup" role="tab" aria-controls="signup") Add New Admin or Engineer
-          a#list-sendnotification-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-sendnotification" role="tab" aria-controls="sendnotification") Send Notification
           a#list-changeprofile-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-changeprofile" role="tab" aria-controls="changeprofile") Update Profile
           a#list-lgout-list.list-group-item.list-group-item-action(href="/user/logout") Log Out
       div.col-md-8
@@ -39,11 +38,11 @@ block content
                       if(!request.engineer)
                         option(selected value="") None
                       if(request.engineer == engineer)
-                        option(selected, value=engineer._id)= engineer.first_name + " " + engineer.last_name
+                        option(selected value=engineer._id)= engineer.first_name + " " + engineer.last_name
                       else
                         option(value=engineer._id)= engineer.first_name + " " + engineer.last_name
                     else
-                      option(value="") None                        
+                      option(value="") None
                   h5 Contractor:
                   select(name="contractor" class="form-control")
                     each contractor in data.contractors
@@ -53,8 +52,13 @@ block content
                         option(selected value=contractor._id)= contractor.first_name + " " + contractor.last_name
                       else
                         option(value=contractor._id)= contractor.first_name + " " + contractor.last_name
+                    else
+                      option(value="") None
                   br
-                  button(type="submit" class="btn btn-primary mt-2  ") Update Request
+                  button(type="submit" class="btn btn-primary mt-2") Update Request
+                form(action="/request/delete" method="post")
+                  input(type="hidden", name="request_id", value=request._id)
+                  button(type="submit" class="btn btn-danger mt-2") Delete Request
                 hr
           div#list-signup.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-signup-list")
             h1 Add New Admin or Engineer
@@ -81,16 +85,10 @@ block content
                   option(value="engineer") Engineer
                   option(value="admin") Admin
               button.btn.btn-primary(type="submit") Signup
-          div#list-sendnotification.tab-pane.fade(role="tabpanel" aria-labelledby="list-sendnotification-list")
-            h1 Send Notification
-            hr
-            form
-              div.form-group
-                textarea#notification.form-control(name="notification" cols="30" rows="10")
-              button.btn.btn-primary(type="submit") Send Notification
           div#list-changeprofile.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-changeprofile-list")
             h1 Update Profile
             hr
+            p.alert.alert-danger(role="alert") If you change your email be sure to login with your updated email next time!
             form(action="/user/update" method="POST")
               div.form-group
                 label(for="fname") First Name

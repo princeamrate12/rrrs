@@ -67,6 +67,7 @@ block content
           div#list-changeprofile.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-changeprofile-list")
             h1 Update Profile
             hr
+            p.alert.alert-danger(role="alert") If you change your email be sure to login with your updated email next time!                      
             form(action="/user/update" method="POST")
               div.form-group
                 label(for="fname") First Name

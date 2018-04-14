@@ -114,11 +114,7 @@ function userDashboard(req, res, next) {
 		}
 	}, function (err, data) {
 		res.render('userdash', { data: data });
-		// res.send(req.requests);
 	});
-
-	// var data = req.session.user;
-	// res.render('userdash', { data: data });
 }
 
 function adminDashboard(req, res, next) {
@@ -235,7 +231,8 @@ exports.user_update_post = function (req, res, next) {
 		password: req.body.password,
 		email: req.body.email,
 		mobile: req.body.mobile,
-		_id: req.session.user._id
+		_id: req.session.user._id,
+		user_type: req.session.user.user_type
 	});
 
 	User.findByIdAndUpdate(userid, user, function (err, updated) {
