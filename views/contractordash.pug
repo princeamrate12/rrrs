@@ -5,13 +5,13 @@ block content
     div.row
       div.col-md-4
         div#list-tab.list-group(role="tablist")
-          a#list-tender-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-tender" role="tab" aria-controls="tender") Approved Tenders
+          a#list-tender-list.list-group-item.list-group-item-action.active(data-toggle="list" href="#list-tender" role="tab" aria-controls="tender") Approved Tenders
           a#list-quotation-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-quotation" role="tab" aria-controls="quotation") Send Quotation
           a#list-changeprofile-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-changeprofile" role="tab" aria-controls="changeprofile") Update Profile
           a#list-lgout-list.list-group-item.list-group-item-action(href="/user/logout") Log Out
       div.col-md-8
         div#nav-tabContent.tab-content
-          div#list-tender.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-tender-list")
+          div#list-tender.tab-pane.fade.show.active(role="tabpanel" aria-labelledby="list-tender-list")
             h1 Approved Tenders
             hr
             .container
@@ -23,7 +23,7 @@ block content
                 h5="Lng: " + request.address.lng
                 hr
           div#list-quotation.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-quotation-list")
-           h4.alert.alert-success.text-dark(role="alert") Please Mention Request Id in Your Quotation
+           h5.alert.alert-success.text-dark(role="alert") Please Mention Request Id in Your Quotation
             h1 All Requests
             hr
             div.container

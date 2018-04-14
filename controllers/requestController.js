@@ -24,11 +24,6 @@ exports.user_generate_request_post = function (req, res, next) {
     })
 }
 
-//Display list of all request
-exports.user_view_request_get = function(req, res, next){
-    res.send("view all request");
-}
-
 //Update Request POST
 exports.request_update_post = function(req, res, next){
     var request = new Request({

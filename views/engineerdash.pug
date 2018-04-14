@@ -5,12 +5,12 @@ block content
     div.row
       div.col-md-4
         div#list-tab.list-group(role="tablist")
-          a#list-request-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-request" role="tab" aria-controls="request") Alloted Sites
+          a#list-request-list.list-group-item.list-group-item-action.active(data-toggle="list" href="#list-request" role="tab" aria-controls="request") Alloted Sites
           a#list-changeprofile-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-changeprofile" role="tab" aria-controls="changeprofile") Update Profile
           a#list-lgout-list.list-group-item.list-group-item-action(href="/user/logout") Log Out
       div.col-md-8
         div#nav-tabContent.tab-content
-          div#list-request.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-request-list")
+          div#list-request.tab-pane.fade.show.active(role="tabpanel" aria-labelledby="list-request-list")
             h1 Alloted Sites
             hr
             - var count = 1;

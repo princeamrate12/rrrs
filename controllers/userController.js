@@ -85,8 +85,40 @@ exports.user_login_post = function (req, res, next) {
 }
 //Functions to display various Dashboards
 function userDashboard(req, res, next) {
-	var data = req.session.user;
-	res.render('userdash', { data: data });
+	async.parallel({
+		requests: function (cb) {
+			Request.find({user: req.session.user._id}).populate({
+				path: 'user',
+				model: 'User',
+				select: 'first_name last_name mobile'
+			}).exec(function (err, requests) {
+				if (err) return next(err);
+				cb(null, requests);
+			});
+		},
+		user: function (cb) {
+			var user = req.session.user;
+			cb(null, user);
+		},
+		engineers: function (cb) {
+			User.find({ user_type: 'engineer' }, 'first_name last_name', function (err, engineers) {
+				if (err) return next(err);
+				cb(null, engineers);
+			});
+		},
+		contractors: function (cb) {
+			User.find({ user_type: 'contractor' }, 'first_name last_name', function (err, contractors) {
+				if (err) return next(err);
+				cb(null, contractors);
+			});
+		}
+	}, function (err, data) {
+		res.render('userdash', { data: data });
+		// res.send(req.requests);
+	});
+
+	// var data = req.session.user;
+	// res.render('userdash', { data: data });
 }
 
 function adminDashboard(req, res, next) {
