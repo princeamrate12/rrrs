@@ -26,3 +26,13 @@ exports.user_generate_request_post = function (req, res, next) {
         }
     })
 }
+
+//Display list of all request
+exports.user_view_request_get = function(req, res, next){
+    res.send("view all request");
+}
+
+//Handle quotation POST
+exports.user_generate_quotation_post = function(req, res, next){
+    res.send("Quotation post");
+}

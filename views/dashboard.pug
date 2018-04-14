@@ -21,83 +21,89 @@ block content
           a#list-lgout-list.list-group-item.list-group-item-action(href="/user/logout") Log Out
       div.col-md-8
         div#nav-tabContent.tab-content
-          div#list-view.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-view-list")
-            h1 List Of All The Request
-            hr
-            div.container
-              h5 Name: Narendra Verma
-              h5 Mobile: +919999999999
-              h5 Address Latitude:
-              h5 Address Longitude:
+          if(data.userType == 'admin')
+            div#list-view.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-view-list")
+              h1 List Of All The Request
               hr
-          div#list-notification.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-notification-list")
-            h1 View Notification
-            hr
-            .container
-          div#list-generate.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-generate-list")
-            h1 Generate Request
-            hr
-            div(id="map" style="overflow: auto;width: 100%; height:400px;")
-            form(action="/request/generate", method="POST", class="my-3")
-              input(type="hidden", name="lat", value="", id="lat")
-              input(type="hidden", name="lng", value="", id="lng")                            
-              script(src="/javascripts/map.js")
-              script(async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsplp87HSqerPj9hPWbT1Zan7QnRXJJSo&callback=initMap")
-              button.btn.btn-primary Generate Request
-            
-          div#list-view.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-view-list")
-            h1 View Request Status
-            hr
-            div.container
-          div#list-quotation.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-quotation-list")
-            h1 Send Quotation
-            hr
-            div.container
-              form(action="")
+              div.container
+                h5 Name: Narendra Verma
+                h5 Mobile: +919999999999
+                h5 Address Latitude:
+                h5 Address Longitude:
+                hr
+          if(data.userType == 'contractor' || data.user == 'engineer')          
+            div#list-notification.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-notification-list")
+              h1 View Notification
+              hr
+              .container
+          if(data.userType == 'user')
+            div#list-generate.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-generate-list")
+              h1 Generate Request
+              hr
+              div(id="map" style="overflow: auto;width: 100%; height:400px;")
+              form(action="/request/generate", method="POST", class="my-3")
+                input(type="hidden", name="lat", value="", id="lat")
+                input(type="hidden", name="lng", value="", id="lng")                            
+                script(src="/javascripts/map.js")
+                script(async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsplp87HSqerPj9hPWbT1Zan7QnRXJJSo&callback=initMap")
+                button.btn.btn-primary Generate Request
+          if(data.userType == 'user')
+            div#list-view.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-view-list")
+              h1 View Request Status
+              hr
+              div.container
+          if(data.userType == 'contractor')    
+            div#list-quotation.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-quotation-list")
+              h1 Send Quotation
+              hr
+              div.container
+                form(action="")
+                  div.form-group
+                    label(for="request")
+                    select#request.form-control(name="request")
+                      option(value="Request1") Request 1
+                      option(value="Request1") Request 1
+                      option(value="Request3") Request 1
+                  div.form-group
+                    label(for="materials")
+                    textarea#materials.form-control(name="materials" cols="30" rows="10")
+                  button.btn.btn-primary Submit
+          if(data.userType == 'admin')
+            div#list-signup.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-signup-list")
+              h1 Signup
+              hr
+              form(action="/signup" method="POST")
                 div.form-group
-                  label(for="request")
-                  select#request.form-control(name="request")
-                    option(value="Request1") Request 1
-                    option(value="Request1") Request 1
-                    option(value="Request3") Request 1
+                  label(for="fname") First Name
+                  input#fname.form-control(type="text" name="fname" placeholder="First Name")
                 div.form-group
-                  label(for="materials")
-                  textarea#materials.form-control(name="materials" cols="30" rows="10")
-                button.btn.btn-primary Submit
-          div#list-signup.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-signup-list")
-            h1 Signup
-            hr
-            form(action="/signup" method="POST")
-              div.form-group
-                label(for="fname") First Name
-                input#fname.form-control(type="text" name="fname" placeholder="First Name")
-              div.form-group
-                label(for="lname") Last Name
-                input#lname.form-control(type="text" name="lname" placeholder="Last Name")
-              div.form-group
-                label(for="password") Password
-                input#password.form-control(type="password" name="password" placeholder="Password")
-              div.form-group
-                label(for="email") Email
-                input#email.form-control(type="email" name="email" placeholder="abc@example.com")
-              div.form-group
-                label(for="mobile") Mobile
-                input#mobile.form-control(type="text" name="mobile" placeholder="Mobile")
-              div.form-group
-                label(for="userType") SignUp As
-                select#UserType.form-control(name="userType")
-                  option(value="user") User
-                  option(value="contractor") Contractor
-                  option(value="engineer") Engineer
-                  option(value="admin") Admin
-              button.btn.btn-primary(type="submit") Signup
-          div#list-sendnotification.tab-pane.fade(role="tabpanel" aria-labelledby="list-sendnotification-list")
-            h1 Send Notification
-            hr
-            form
-              div.form-group
-                textarea#notification.form-control(name="notification" cols="30" rows="10")
-              button.btn.btn-primary(type="submit") Send Notification
+                  label(for="lname") Last Name
+                  input#lname.form-control(type="text" name="lname" placeholder="Last Name")
+                div.form-group
+                  label(for="password") Password
+                  input#password.form-control(type="password" name="password" placeholder="Password")
+                div.form-group
+                  label(for="email") Email
+                  input#email.form-control(type="email" name="email" placeholder="abc@example.com")
+                div.form-group
+                  label(for="mobile") Mobile
+                  input#mobile.form-control(type="text" name="mobile" placeholder="Mobile")
+                div.form-group
+                  label(for="userType") SignUp As
+                  select#UserType.form-control(name="userType")
+                    option(value="user") User
+                    option(value="contractor") Contractor
+                    option(value="engineer") Engineer
+                    option(value="admin") Admin
+                button.btn.btn-primary(type="submit") Signup
+          if(data.userType == 'admin')
+            div#list-sendnotification.tab-pane.fade(role="tabpanel" aria-labelledby="list-sendnotification-list")
+              h1 Send Notification
+              hr
+              form
+                div.form-group
+                  textarea#notification.form-control(name="notification" cols="30" rows="10")
+                button.btn.btn-primary(type="submit") Send Notification
           div#list-changeprofile.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-changeprofile-list")
             h1 Update Profile
             hr

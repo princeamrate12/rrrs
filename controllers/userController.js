@@ -69,7 +69,6 @@ exports.user_dashboard_get = function (req, res, next) {
 //Handle update profile POST
 exports.user_update_post = function (req, res, next) {
     user = req.session._id;
-    console.log("user");
     var userdetail = {
         first_name: req.body.fname,
         last_name: req.body.lname,
@@ -79,12 +78,12 @@ exports.user_update_post = function (req, res, next) {
         _id: req.session.user._id
     }
 
-    User.findByIdAndUpdate(user, userdetail, function (err, updated) {
+    User.findOneAndUpdate({_id: user}, userdetail, function (err, updated) {
         if (err) {
             return next(err);
         } else {
             console.log("user updated");
-            res.redirect('/user/dashboard');
+            res.redirect('/');
         }
     })
 };

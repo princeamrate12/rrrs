@@ -10,6 +10,12 @@ router.get('/dashboard', user_controller.user_dashboard_get);
 //Handle profile update POST
 router.post('/update', user_controller.user_update_post);
 
+//Handle quotation POST
+router.post('/generatequot', request_controller.user_generate_quotation_post);
+
+//HAndle get request for viewing list of request GET
+router.get('/viewrequest',request_controller.user_view_request_get)
+
 //Handle change password POST
 // router.post('/changepass', user_controller.user_changepass_post);
 
