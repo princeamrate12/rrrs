@@ -1,0 +1,104 @@
+extends layout
+block content
+  main.container.mt-3
+    h1=data.first_name  
+    div.row
+      div.col-md-4
+        div#list-tab.list-group(role="tablist")
+          a#list-view-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-view" role="tab" aria-controls="view") View Requests
+          a#list-signup-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-signup" role="tab" aria-controls="signup") Add New Admin or Engineer
+          a#list-sendnotification-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-sendnotification" role="tab" aria-controls="sendnotification") Send Notification
+          a#list-changeprofile-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-changeprofile" role="tab" aria-controls="changeprofile") Update Profile
+          a#list-lgout-list.list-group-item.list-group-item-action(href="/user/logout") Log Out
+      div.col-md-8
+        div#nav-tabContent.tab-content
+          div#list-view.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-view-list")
+            h1 List Of All The Request
+            hr
+            div.container
+              each request in data.requests  
+                h5= request.user.first_name + " " + request.user.last_name
+                h5= request.user.mobile
+                h5="Lat: " + request.address.lat
+                h5="Lng: " + request.address.lng
+                form(action="/request/update" method="post")
+                  input(type="hidden", name="request_id", value=request._id)
+                  h5 Status:
+                  select(name="status" class="form-control")
+                    each status in ['submitted', 'engineerAlloted', 'contractorAlloted', 'processing', 'completed']
+                      if(request.status == status)
+                        option(selected value=status)= status
+                      else
+                        option(value=status)= status
+                  h5 Engineer:
+                  select(name="engineer" class="form-control")
+                    option(value="none") None
+                    each engineer in data.engineers
+                      if(request.engineer == engineer)
+                        option(selected, value=engineer._id)= engineer.first_name + " " + engineer.last_name
+                      else
+                        option(value=engineer._id)= engineer.first_name + " " + engineer.last_name
+                  h5 Contractor:
+                  select(name="status" class="form-control")
+                    option(value="none") None
+                    each contractor in data.contractors
+                      if(request.contractor == contractor)
+                        option(selected value=contractor._id)= contractor.first_name + " " + contractor.last_name
+                      else
+                        option(value=contractor._id)= contractor.first_name + " " + contractor.last_name
+                  
+                  br
+                  button(type="submit" class="btn btn-primary mt-2  ") Update Request
+                hr
+          div#list-signup.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-signup-list")
+            h1 Add New Admin or Engineer
+            hr
+            form(action="/user/signup" method="POST")
+              div.form-group
+                label(for="fname") First Name
+                input#fname.form-control(type="text" name="fname" placeholder="First Name")
+              div.form-group
+                label(for="lname") Last Name
+                input#lname.form-control(type="text" name="lname" placeholder="Last Name")
+              div.form-group
+                label(for="password") Password
+                input#password.form-control(type="password" name="password" placeholder="Password")
+              div.form-group
+                label(for="email") Email
+                input#email.form-control(type="email" name="email" placeholder="abc@example.com")
+              div.form-group
+                label(for="mobile") Mobile
+                input#mobile.form-control(type="text" name="mobile" placeholder="Mobile")
+              div.form-group
+                label(for="userType") SignUp As
+                select#UserType.form-control(name="userType")
+                  option(value="engineer") Engineer
+                  option(value="admin") Admin
+              button.btn.btn-primary(type="submit") Signup
+          div#list-sendnotification.tab-pane.fade(role="tabpanel" aria-labelledby="list-sendnotification-list")
+            h1 Send Notification
+            hr
+            form
+              div.form-group
+                textarea#notification.form-control(name="notification" cols="30" rows="10")
+              button.btn.btn-primary(type="submit") Send Notification
+          div#list-changeprofile.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-changeprofile-list")
+            h1 Update Profile
+            hr
+            form(action="/user/update" method="POST")
+              div.form-group
+                label(for="fname") First Name
+                input#fname.form-control(type="text" name="fname" placeholder="First Name" value=data.user.first_name)
+              div.form-group
+                label(for="lname") Last Name
+                input#lname.form-control(type="text" name="lname" placeholder="Last Name" value=data.user.last_name)
+              div.form-group
+                label(for="password") Password
+                input#password.form-control(type="password" name="password" placeholder="Password" value=data.user.password)
+              div.form-group
+                label(for="email") Email
+                input#email.form-control(type="email" name="email" placeholder="abc@example.com" value=data.user.email)
+              div.form-group
+                label(for="mobile") Mobile
+                input#mobile.form-control(type="text" name="mobile" placeholder="Mobile" value=data.user.mobile)
+              button.btn.btn-primary(type="submit") Update Profile

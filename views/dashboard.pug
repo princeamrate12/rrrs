@@ -1,27 +1,28 @@
 extends layout
 block content
   main.container.mt-3
+    h1=data.first_name  
     div.row
       div.col-md-4
         div#list-tab.list-group(role="tablist")
-          if(data.userType == 'admin')
+          if(data.user_type == 'admin')
             a#list-view-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-view" role="tab" aria-controls="view") View Requests
-          if(data.userType == 'contractor'||data.userType == 'engineer')
+          if(data.user_type == 'contractor'||data.user_type == 'engineer')
             a#list-notification-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-notification" role="tab" aria-controls="notification") View Notification
-          if(data.userType == 'contractor')
+          if(data.user_type == 'contractor')
             a#list-quotation-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-quotation" role="tab" aria-controls="quotation") Send Quotation
-          if(data.userType == 'user')
+          if(data.user_type == 'user')
             a#list-generate-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-generate" role="tab" aria-controls="generate") Generate Request            
-          if(data.userType == 'user')
+          if(data.user_type == 'user')
             a#list-view-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-view" role="tab" aria-controls="view") View Request Status
-          if(data.userType == 'admin')
-            a#list-signup-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-signup" role="tab" aria-controls="signup") Signup
+          if(data.user_type == 'admin')
+            a#list-signup-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-signup" role="tab" aria-controls="signup") Add New Admin or Engineer
             a#list-sendnotification-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-sendnotification" role="tab" aria-controls="sendnotification") Send Notification
           a#list-changeprofile-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-changeprofile" role="tab" aria-controls="changeprofile") Update Profile
           a#list-lgout-list.list-group-item.list-group-item-action(href="/user/logout") Log Out
       div.col-md-8
         div#nav-tabContent.tab-content
-          if(data.userType == 'admin')
+          if(data.user_type == 'admin')
             div#list-view.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-view-list")
               h1 List Of All The Request
               hr
@@ -31,12 +32,12 @@ block content
                 h5 Address Latitude:
                 h5 Address Longitude:
                 hr
-          if(data.userType == 'contractor' || data.user == 'engineer')          
+          if(data.user_type == 'contractor' || data.user_type == 'engineer')          
             div#list-notification.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-notification-list")
               h1 View Notification
               hr
               .container
-          if(data.userType == 'user')
+          if(data.user_type == 'user')
             div#list-generate.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-generate-list")
               h1 Generate Request
               hr
@@ -47,12 +48,12 @@ block content
                 script(src="/javascripts/map.js")
                 script(async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsplp87HSqerPj9hPWbT1Zan7QnRXJJSo&callback=initMap")
                 button.btn.btn-primary Generate Request
-          if(data.userType == 'user')
+          if(data.user_type == 'user')
             div#list-view.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-view-list")
               h1 View Request Status
               hr
               div.container
-          if(data.userType == 'contractor')    
+          if(data.user_type == 'contractor')    
             div#list-quotation.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-quotation-list")
               h1 Send Quotation
               hr
@@ -68,11 +69,11 @@ block content
                     label(for="materials")
                     textarea#materials.form-control(name="materials" cols="30" rows="10")
                   button.btn.btn-primary Submit
-          if(data.userType == 'admin')
+          if(data.user_type == 'admin')
             div#list-signup.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-signup-list")
-              h1 Signup
+              h1 Add New Admin or Engineer
               hr
-              form(action="/signup" method="POST")
+              form(action="/user/signup" method="POST")
                 div.form-group
                   label(for="fname") First Name
                   input#fname.form-control(type="text" name="fname" placeholder="First Name")
@@ -91,12 +92,10 @@ block content
                 div.form-group
                   label(for="userType") SignUp As
                   select#UserType.form-control(name="userType")
-                    option(value="user") User
-                    option(value="contractor") Contractor
                     option(value="engineer") Engineer
                     option(value="admin") Admin
                 button.btn.btn-primary(type="submit") Signup
-          if(data.userType == 'admin')
+          if(data.user_type == 'admin')
             div#list-sendnotification.tab-pane.fade(role="tabpanel" aria-labelledby="list-sendnotification-list")
               h1 Send Notification
               hr
@@ -107,20 +106,20 @@ block content
           div#list-changeprofile.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-changeprofile-list")
             h1 Update Profile
             hr
-            form(action="/signup" method="POST")
+            form(action="/user/update" method="POST")
               div.form-group
                 label(for="fname") First Name
-                input#fname.form-control(type="text" name="fname" placeholder="First Name")
+                input#fname.form-control(type="text" name="fname" placeholder="First Name" value=data.first_name)
               div.form-group
                 label(for="lname") Last Name
-                input#lname.form-control(type="text" name="lname" placeholder="Last Name")
+                input#lname.form-control(type="text" name="lname" placeholder="Last Name" value=data.last_name)
               div.form-group
                 label(for="password") Password
-                input#password.form-control(type="password" name="password" placeholder="Password")
+                input#password.form-control(type="password" name="password" placeholder="Password" value=data.password)
               div.form-group
                 label(for="email") Email
-                input#email.form-control(type="email" name="email" placeholder="abc@example.com")
+                input#email.form-control(type="email" name="email" placeholder="abc@example.com" value=data.email)
               div.form-group
                 label(for="mobile") Mobile
-                input#mobile.form-control(type="text" name="mobile" placeholder="Mobile")
+                input#mobile.form-control(type="text" name="mobile" placeholder="Mobile" value=data.mobile)
               button.btn.btn-primary(type="submit") Update Profile

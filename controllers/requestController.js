@@ -3,9 +3,6 @@ var Request = require('../models/request');
 
 var auth = require('./authorizationPermissions');
 
-const { body, validationResult } = require('express-validator/check');
-const { sanitizeBody } = require('express-validator/filter');
-
 //Handle Generate Request POST
 exports.user_generate_request_post = function (req, res, next) {
     var requestDetail = {
@@ -30,6 +27,25 @@ exports.user_generate_request_post = function (req, res, next) {
 //Display list of all request
 exports.user_view_request_get = function(req, res, next){
     res.send("view all request");
+}
+
+//Update Request POST
+exports.request_update_post = function(req, res, next){
+    requestid = req.body.request_id;
+    var request = new Request({
+        status: req.body.status,
+		engineer: req.body.engineer,
+		contractor: req.body.contractor,
+	});
+
+	User.findByIdAndUpdate(requestid, request, function (err, updated) {
+		if (err) {
+			return next(err);
+		} else {
+			console.log("request updated");
+			res.redirect('/user/dashboard');
+		}
+	})
 }
 
 //Handle quotation POST
