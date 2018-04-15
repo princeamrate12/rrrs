@@ -3,13 +3,13 @@ block content
   p.text-right.alert.alert-secondary(role="alert")="Hello " + data.user.first_name  
   main.container.mt-3
     .row
-      .col-md-4
+      .col-md-4.mb-3
         #list-tab.list-group(role="tablist")
           a#list-view-list.list-group-item.list-group-item-action.active(data-toggle="list" href="#list-view" role="tab" aria-controls="view") View Requests
           a#list-signup-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-signup" role="tab" aria-controls="signup") Add New Admin or Engineer
           a#list-changeprofile-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-changeprofile" role="tab" aria-controls="changeprofile") Update Profile
           a#list-lgout-list.list-group-item.list-group-item-action(href="/user/logout") Log Out
-      .col-md-8.container.p-5.border.mt-3
+      .col-md-8.container.p-5.border
         #nav-tabContent.tab-content
           #list-view.tab-pane.fade.show.active(role="tabpanel" aria-labelledby="list-view-list")
             h1 List Of All The Request

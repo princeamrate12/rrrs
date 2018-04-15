@@ -4,13 +4,13 @@ block content
   main.container.mt-3
     h1=data.first_name  
     div.row
-      div.col-md-4
+      div.col-md-4.mb-3
         div#list-tab.list-group(role="tablist")
           a#list-generate-list.list-group-item.list-group-item-action.active(data-toggle="list" href="#list-generate" role="tab" aria-controls="generate") Generate Request            
           a#list-view-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-view" role="tab" aria-controls="view") View Request Status
           a#list-changeprofile-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-changeprofile" role="tab" aria-controls="changeprofile") Update Profile
           a#list-lgout-list.list-group-item.list-group-item-action(href="/user/logout") Log Out
-      div.col-md-8.container.border.p-5.mt-3
+      div.col-md-8.container.border.p-5
         div#nav-tabContent.tab-content
           div#list-generate.tab-pane.fade.show.active(role="tabpanel" aria-labelledby="list-generate-list")
             h1 Generate Request

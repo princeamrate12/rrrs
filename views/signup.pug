@@ -1,8 +1,9 @@
 extends layout
 block content
   main.container
-    div.signup.mx-auto
+    .signup.mx-auto.border.p-5.my-3
       h1 Sign Up Here
+      hr
       form(action="/signup" method="POST")
         div.form-group
           label(for="fname") First Name
@@ -24,6 +25,4 @@ block content
           select#UserType.form-control(name="userType")
             option(value="user") User
             option(value="contractor") Contractor
-            option(value="engineer") Engiineer
-            option(value="admin") Admin
         button.btn.btn-primary(type="submit") Register
