@@ -7,8 +7,6 @@ var RequestSchema = new Schema({
     status: {type: String, required: true, enum: ['submitted', 'engineerAlloted', 'contractorAlloted', 'processing', 'completed'], default: 'submitted'},
     engineer: {type: Schema.ObjectId, ref: 'User'},
     contractor: {type: Schema.ObjectId, ref: 'User'},
-    quotation: [{type: String}],
-    date: {type: Date, default: Date.now}
 });
 
 module.exports = mongoose.model("Request", RequestSchema);
