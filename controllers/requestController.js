@@ -1,5 +1,6 @@
 var User = require('../models/user');
 var Request = require('../models/request');
+var async = require('async');
 
 var auth = require('./authorizationPermissions');
 
@@ -56,7 +57,19 @@ exports.delete_request_post = function(req, res, next){
     })
 }
 
-//Handle quotation POST
-exports.user_generate_quotation_post = function(req, res, next){
-    res.send("Quotation post");
+//View Map for engineer POST
+exports.view_map_post = function(req, res, next){
+    async.parallel({
+		lat: function (cb) {
+            lat = req.body.request_lat;
+            cb(null, lat);
+		},
+		lng: function (cb) {
+            lng = req.body.request_lng;
+            cb(null, lng);
+		},
+	}, function (err, data) {
+        console.log(data);
+		res.render('map', { data: data });
+	});
 }

@@ -1,5 +1,6 @@
 extends layout
 block content
+  p.text-right.alert.alert-secondary(role="alert")="Hello " + data.user.first_name  
   main.container.mt-3
     h1=data.first_name  
     div.row
@@ -9,32 +10,30 @@ block content
           a#list-quotation-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-quotation" role="tab" aria-controls="quotation") Send Quotation
           a#list-changeprofile-list.list-group-item.list-group-item-action(data-toggle="list" href="#list-changeprofile" role="tab" aria-controls="changeprofile") Update Profile
           a#list-lgout-list.list-group-item.list-group-item-action(href="/user/logout") Log Out
-      div.col-md-8
+      div.col-md-8.container.border.p-5.mt-3
         div#nav-tabContent.tab-content
           div#list-tender.tab-pane.fade.show.active(role="tabpanel" aria-labelledby="list-tender-list")
             h1 Approved Tenders
             hr
-            .container
-              each request in data.requests  
-                h5="Request Id: " + request._id
-                h5="Requested By: " + request.user.first_name + " " + request.user.last_name
-                h5="Mobile: " + request.user.mobile
-                h5="Lat: " + request.address.lat
-                h5="Lng: " + request.address.lng
-                hr
+            each request in data.requests  
+              h5="Request Id: " + request._id
+              h5="Requested By: " + request.user.first_name + " " + request.user.last_name
+              h5="Mobile: " + request.user.mobile
+              h5="Lat: " + request.address.lat
+              h5="Lng: " + request.address.lng
+              hr
           div#list-quotation.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-quotation-list")
-           p.alert.alert-danger(role="alert") Please Mention Request Id in Your Quotation
             h1 All Requests
             hr
-            div.container
-              each tender in data.tender  
-                h5="Request Id: " + tender._id
-                h5="Requested By: " + tender.user.first_name + " " + tender.user.last_name
-                h5="Mobile: " + tender.user.mobile
-                h5="Lat: " + tender.address.lat
-                h5="Lng: " + tender.address.lng
-                a(href="mailto:admin@rrrs.com" class="btn btn-primary") Send Quotation
-                hr
+            p.alert.alert-danger(role="alert") Please Mention Request Id in Your Quotation
+            each tender in data.tender  
+              h5="Request Id: " + tender._id
+              h5="Requested By: " + tender.user.first_name + " " + tender.user.last_name
+              h5="Mobile: " + tender.user.mobile
+              h5="Lat: " + tender.address.lat
+              h5="Lng: " + tender.address.lng
+              a(href="mailto:admin@rrrs.com" class="btn btn-primary") Send Quotation
+              hr
           div#list-changeprofile.tab-pane.fade.show(role="tabpanel" aria-labelledby="list-changeprofile-list")
             h1 Update Profile
             hr

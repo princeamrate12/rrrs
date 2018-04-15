@@ -1,9 +1,9 @@
 body {
-    background: #4d4c4c;
+    /* background: #4d4c4c; */
     /* color: white; */
-    /* background: #1D2B64; */
-    /* background: -webkit-linear-gradient(to right, #F8CDDA, #1D2B64); */
-    /* background: linear-gradient(to right, #F8CDDA, #1D2B64); */
+    background: #1D2B64;
+    background: -webkit-linear-gradient(to right, #F8CDDA, #1D2B64);
+    background: linear-gradient(to right, #F8CDDA, #1D2B64);
 }
 
 img {
@@ -23,7 +23,7 @@ img {
 }
 
 hr {
-    overflow: visible; /* For IE */ 
+    overflow: visible;
     height: 30px; 
     border-style: solid; 
     border-color: black; 
@@ -32,7 +32,6 @@ hr {
 }
 
 hr:before {
-    /* Not really supposed to work, but does */
     display: block;
     content: "";
     height: 30px;

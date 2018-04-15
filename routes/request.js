@@ -13,4 +13,7 @@ router.post('/update', request_controller.request_update_post);
 //Handle Request delete
 router.post('/delete', request_controller.delete_request_post);
 
+//View Map for engineer POST
+router.post('/map', request_controller.view_map_post);
+
 module.exports = router;

@@ -217,8 +217,10 @@ exports.user_dashboard_get = function (req, res, next) {
 		userDashboard(req, res, next);
 	} else if (userType == 'contractor') {
 		contractorDashboard(req, res, next);
-	} else {
+	} else if(userType == 'engineer') {
 		engineerDashboard(req, res, next);
+	} else {
+		res.next(err);
 	}
 }
 

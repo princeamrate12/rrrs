@@ -2,11 +2,13 @@ extends layout
 block content
   main
     .container
-      .row
+      .row.mt-5
         .col-md-7
-          img(src="images/Road Maintenance.jpg", class="img-thumbnail mt-2")
-        .col-md-5.my-auto
-          form(action="/login" method="POST" class="my-2")
+          img(src="https://i1.wp.com/pakobserver.net/wp-content/uploads/2017/08/Road-Repair.jpg?fit=636%2C421&ssl=1" class="img-thumbnail")
+        .col-md-5.my-auto.border.p-5
+          h1 Login
+          hr
+          form(action="/login" method="POST")
             .form-group
               label(for="username") Email address
               input#username.form-control(type="email" name="email" placeholder="Enter email")

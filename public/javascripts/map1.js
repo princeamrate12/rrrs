@@ -1,7 +1,7 @@
 var map;
 
 function initMap() {
-    requestloc = {lat: 22.719447308860243, lng: 75.74786121621094}
+    requestloc = {lat: lat, lng: lng}
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 12,
         center: requestloc,

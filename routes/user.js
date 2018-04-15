@@ -10,9 +10,6 @@ router.get('/dashboard', user_controller.user_dashboard_get);
 //Handle profile update POST
 router.post('/update', user_controller.user_update_post);
 
-//Handle quotation POST
-router.post('/generatequot', request_controller.user_generate_quotation_post);
-
 //Handle Admin Signup POST
 router.post('/signup', user_controller.admin_create_user_post);
 
