@@ -15,46 +15,51 @@ block content
             h1 List Of All The Request
             hr
             each request in data.requests  
-              h5= request.user.first_name + " " + request.user.last_name
-              h5= request.user.mobile
-              h5="Lat: " + request.address.lat
-              h5="Lng: " + request.address.lng
-              form(action="/request/update" method="post")
-                input(type="hidden", name="request_id", value=request._id)
-                input(type="hidden", name="request_user_id", value=request.user._id)
-                input(type="hidden", name="request_add_lat", value=request.address.lat)
-                input(type="hidden", name="request_add_lng", value=request.address.lng)
-                h5 Status:
-                select(name="status" class="form-control")
-                  each status in ['submitted', 'engineerAlloted', 'contractorAlloted', 'processing', 'completed']
-                    if(request.status == status)
-                      option(selected value=status)= status
-                    else
-                      option(value=status)= status
-                h5 Engineer:
-                select(name="engineer" class="form-control")
-                  each engineer in data.engineers
-                    if(!request.engineer)
-                      option(selected value="") None
-                    if(request.engineer == engineer)
-                      option(selected value=engineer._id)= engineer.first_name + " " + engineer.last_name
-                    else
-                      option(value=engineer._id)= engineer.first_name + " " + engineer.last_name
+              if(request.status == 'completed' && request.engineer && request.contractor)
+                h5="Requested By: " + request.user.first_name + " " + request.user.last_name
+                h5="Mobile: " + request.user.mobile
+                h5="Lat: " + request.address.lat
+                h5="Lng: " + request.address.lng
+                h5="Engineer: " + request.engineer.first_name + " " + request.engineer.last_name                
+                h5="Contractor: " + request.contractor.first_name + " " + request.contractor.last_name
+                h5="Status: " + request.status
+              else
+                p.alert.alert-danger(role="alert") You can allot Engineer or Contractor only once!              
+                h5="Requested By: " + request.user.first_name + " " + request.user.last_name
+                h5="Mobile: " + request.user.mobile
+                h5="Lat: " + request.address.lat
+                h5="Lng: " + request.address.lng
+                form(action="/request/update" method="post")
+                  input(type="hidden" name="request_id" value=request._id)
+                  input(type="hidden" name="request_user_id" value=request.user._id)
+                  input(type="hidden" name="request_add_lat" value=request.address.lat)
+                  input(type="hidden" name="request_add_lng" value=request.address.lng)
+                  if(request.engineer)
+                    h5="Engineer: " + request.engineer.first_name + " " + request.engineer.last_name
+                    input(type="hidden" value=request.engineer._id)
                   else
-                    option(value="") None
-                h5 Contractor:
-                select(name="contractor" class="form-control")
-                  each contractor in data.contractors
-                    if(!request.contractor)
-                      option(selected value="") None
-                    if(request.contractor == contractor)
-                      option(selected value=contractor._id)= contractor.first_name + " " + contractor.last_name
-                    else
-                      option(value=contractor._id)= contractor.first_name + " " + contractor.last_name
+                    h5 Engineer:
+                    select(name="engineer" class="form-control")
+                      option(value="" selected) None
+                      each engineer in data.engineers
+                        option(value=engineer._id)= engineer.first_name + " " + engineer.last_name
+                  if(request.contractor)
+                    h5="Contractor: " + request.contractor.first_name + " " + request.contractor.last_name
+                    input(type="hidden" value=request.contractor._id)
                   else
-                    option(value="") None
-                br
-                button(type="submit" class="btn btn-primary mt-2") Update Request
+                    h5 Contractor:
+                    select(name="contractor" class="form-control")
+                      option(selected value="") None
+                      each contractor in data.contractors
+                        option(value=contractor._id)= contractor.first_name + " " + contractor.last_name
+                  h5="Status: " + request.status
+                  select(name="status" class="form-control")
+                    each status in ['submitted', 'engineerAlloted', 'contractorAlloted', 'processing', 'completed']
+                      if(request.status == status)
+                        option(selected value=status)= status
+                      else
+                        option(value=status)= status
+                  button(type="submit" class="btn btn-xs btn-primary mt-2") Update Request
               form(action="/request/delete" method="post")
                 input(type="hidden", name="request_id", value=request._id)
                 button(type="submit" class="btn btn-danger mt-2") Delete Request

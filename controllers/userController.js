@@ -124,8 +124,17 @@ function adminDashboard(req, res, next) {
 				path: 'user',
 				model: 'User',
 				select: 'first_name last_name mobile'
+			}).populate({
+				path: 'engineer',
+				model: 'User',
+				select: 'first_name last_name'
+			}).populate({
+				path: 'contractor',
+				model: 'User',
+				select: 'first_name last_name'
 			}).exec(function (err, requests) {
 				if (err) return next(err);
+				console.log(requests.engineer);
 				cb(null, requests);
 			});
 		},
