@@ -4,7 +4,7 @@ var router = express.Router();
 var request_controller = require('../controllers/requestController');
 var user_controller = require('../controllers/userController');
 
-//Display Login Forn GET
+//Display Login Form GET
 router.get('/', user_controller.user_login_get);
 
 //Handle Login Form POST
