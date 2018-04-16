@@ -59,7 +59,7 @@ block content
                         option(selected value=status)= status
                       else
                         option(value=status)= status
-                  button(type="submit" class="btn btn-xs btn-primary mt-2") Update Request
+                  button(type="submit" class="btn btn-primary mt-2") Update Request
               form(action="/request/delete" method="post")
                 input(type="hidden", name="request_id", value=request._id)
                 button(type="submit" class="btn btn-danger mt-2") Delete Request
