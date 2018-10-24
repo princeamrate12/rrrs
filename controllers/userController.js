@@ -39,7 +39,9 @@ exports.user_create_post = function (req, res, next) {
 }
 
 //Handle SignUp Form from Admin POST
-exports.admin_create_user_post = function (req, res, next) {
+exports.admin_create_user_post = [
+	auth.checkSignIn,
+	function (req, res, next) {
 	User.findOne({ 'email': req.body.email }).exec(function (err, found_user) {
 		if (err) { next(err); }
 		if (found_user) {
@@ -63,7 +65,7 @@ exports.admin_create_user_post = function (req, res, next) {
 			});
 		}
 	});
-}
+}]
 
 //Display login form GET
 exports.user_login_get = function (req, res, next) {
@@ -218,23 +220,27 @@ function contractorDashboard(req, res, next) {
 }
 
 //Display dashboard GET
-exports.user_dashboard_get = function (req, res, next) {
-	var userType = req.session.user.user_type;
-	if (userType == 'admin') {
-		adminDashboard(req, res, next);
-	} else if (userType == 'user') {
-		userDashboard(req, res, next);
-	} else if (userType == 'contractor') {
-		contractorDashboard(req, res, next);
-	} else if(userType == 'engineer') {
-		engineerDashboard(req, res, next);
-	} else {
-		res.next(err);
+exports.user_dashboard_get = [
+	auth.checkSignIn,
+	function (req, res, next) {
+		var userType = req.session.user.user_type;
+		if (userType == 'admin') {
+			adminDashboard(req, res, next);
+		} else if (userType == 'user') {
+			userDashboard(req, res, next);
+		} else if (userType == 'contractor') {
+			contractorDashboard(req, res, next);
+		} else if(userType == 'engineer') {
+			engineerDashboard(req, res, next);
+		} else {
+			res.next(err);
 	}
-}
+}]
 
 //Handle update profile POST
-exports.user_update_post = function (req, res, next) {
+exports.user_update_post = [
+	auth.checkSignIn,
+	function (req, res, next) {
 	userid = req.session.user._id;
 	var user = new User({
 		first_name: req.body.fname,
@@ -255,11 +261,13 @@ exports.user_update_post = function (req, res, next) {
 			res.redirect('/user/dashboard');
 		}
 	})
-};
+}]
 
 //HAndle user logout POST
-exports.user_logout_get = function (req, res, next) {
+exports.user_logout_get = [
+	auth.checkSignIn,
+	function (req, res, next) {
 	req.session.destroy(function () {
 		res.redirect('/');
 	});
-};
+}]

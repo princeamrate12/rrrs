@@ -5,7 +5,9 @@ var async = require('async');
 var auth = require('./authorizationPermissions');
 
 //Handle Generate Request POST
-exports.user_generate_request_post = function (req, res, next) {
+exports.user_generate_request_post = [
+    auth.checkSignIn,
+    function (req, res, next) {
     var requestDetail = {
         user: req.session.user,
         address: {
@@ -22,10 +24,12 @@ exports.user_generate_request_post = function (req, res, next) {
             res.redirect('/user/dashboard');
         }
     })
-}
+}]
 
 //Update Request POST
-exports.request_update_post = function(req, res, next){
+exports.request_update_post = [
+    auth.checkSignIn,
+    function(req, res, next){
     var request = new Request({
         _id: req.body.request_id,
         user: req.body.request_user_id,
@@ -46,19 +50,23 @@ exports.request_update_post = function(req, res, next){
 			res.redirect('/user/dashboard');
 		}
 	})
-}
+}]
 
-exports.delete_request_post = function(req, res, next){
+exports.delete_request_post = [
+    auth.checkSignIn,
+    function(req, res, next){
     requestid = req.body.request_id;
     Request.findByIdAndRemove(requestid, function(err, removed){
         if(err) next(err);
         console.log("request deleted");
         res.redirect('/user/dashboard');
     })
-}
+}]
 
 //View Map for engineer POST
-exports.view_map_post = function(req, res, next){
+exports.view_map_post = [
+    auth.checkSignIn,
+    function(req, res, next){
     async.parallel({
 		lat: function (cb) {
             lat = req.body.request_lat;
@@ -72,4 +80,4 @@ exports.view_map_post = function(req, res, next){
         console.log(data);
 		res.render('map', { data: data });
 	});
-}
+}]
